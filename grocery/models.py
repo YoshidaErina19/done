@@ -16,4 +16,4 @@ class Grocery(models.Model):
         verbose_name_plural = 'Grocery'
 
     def __str__(self):
-        return str(self.checkbox_created_at)
+        return self.user,str(self.checkbox_created_at)
