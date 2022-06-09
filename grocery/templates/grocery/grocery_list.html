@@ -1,11 +1,51 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>grocery</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}買った物一覧｜Done Housework{% endblock %}
+
+{% block active_grocery_list %}active{% endblock %}
+
+
+
+{% block contents %}
+<div class="container">
+    <div class="row">
+        <div class="my-div-style w-100">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <a class="btn btn-warning mt-5 ml-2" href="{% url 'housework:housework_create' %}">家事記録作成</a>
+                <br>
+                <br>
+                {% for grocery in grocery_list %}
+                  <div class="post-preview">
+                      <h2 class="post-title">
+                          {{ grocery.user }}
+                      </h2>
+
+                      {% if grocery.checkbox_1 == 'checked' %}
+                          <input type="checkbox" name="tags" value="1" id="id_tags_0" class="invisible" {{ grocery.checkbox_1 }}>
+                          <label for="id_tags_0" class="round">牛乳</label>
+                      {% endif %}
+
+                      {% if grocery.checkbox_2 == 'checked' %}
+                          <input type="checkbox" name="tags" value="1" id="id_tags_1" class="invisible" {{ grocery.checkbox_2 }}>
+                          <label for="id_tags_1" class="round">食パン</label>
+                      {% endif %}
+
+                      {% if grocery.checkbox_3 == 'checked' %}
+                          <input type="checkbox" name="tags" value="1" id="id_tags_2" class="invisible" {{ grocery.checkbox_3 }}>
+                          <label for="id_tags_2" class="round">ヨーグルト</label>
+                      {% endif %}
+
+                      <p class="post-meta">{{ grocery.checkbox_created_at }}</p>
+                  </div>
+                <hr>
+                {% empty %}
+                  <p>まだ買った物が登録されていません</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
     {% for checkbox in grocery_list %}
     <div>
@@ -41,11 +81,10 @@
         }
 
         input[type="checkbox"]:checked + label {
-            background: #00809d;
+            background: #007bff;
             color: #fff;
         }
     </style>
 </div>
 
-</body>
-</html>
+{% endblock %}
