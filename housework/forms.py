@@ -2,15 +2,14 @@ from django import forms
 from django.core.mail import EmailMessage
 from .models import Housework
 
-
 class InquiryForm(forms.Form):
-    name = forms.CharField(label='お名前', max_length=30)
+    name = forms.CharField(label='お名前',max_length=30)
     email = forms.EmailField(label='メールアドレス')
-    title = forms.CharField(label='タイトル', max_length=30)
-    message = forms.CharField(label='メッセージ', widget=forms.Textarea)
+    title = forms.CharField(label='タイトル',max_length=30)
+    message = forms.CharField(label='メッセージ',widget=forms.Textarea)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
 
         self.fields['name'].widget.attrs['class'] = 'form-control col=9'
         self.fields['name'].widget.attrs['placeholder'] = 'お名前をここに入力してください'
@@ -40,16 +39,15 @@ class InquiryForm(forms.Form):
             email
         ]
 
-        message = EmailMessage(subject=subject, body=message, from_email=from_email, to=to_list, cc=cc_list)
+        message = EmailMessage(subject=subject,body=message,from_email=from_email,to=to_list,cc=cc_list)
         message.send()
 
 
 class HouseworkCreateForm(forms.ModelForm):
     class Meta:
         model = Housework
-        fields = ('title', 'content', 'bought_items', 'photo1', 'photo2', 'photo3',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs['class'] = 'form-control'
+        fields = ('title', 'content', 'bought_items','photo1', 'photo2', 'photo3',)
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            for field in self.fields.values():
+                field.widget.attrs['class'] = 'form-control'
