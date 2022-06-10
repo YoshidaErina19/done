@@ -45,7 +45,10 @@
                          </li>
                         {% if user.is_authenticated %}
                           <li class="nav-item {% block active_housework_list %}{% endblock %}">
-                              <a class="nav-link" href="{% url 'housework:housework_list' %}">HOUSEWORK LIST</a>
+                              <a class="nav-link" href="{% url 'housework:housework_list' %}">Housework List</a>
+                          </li>
+                          <li class="nav-item {% block active_grocery_list %}{% endblock %}">
+                              <a class="nav-link" href="{% url 'grocery:grocery_list' %}">Grocery List</a>
                           </li>
                         {% endif %}
                      </ul>
