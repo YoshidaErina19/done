@@ -19,7 +19,9 @@
                 {% for grocery in grocery_list %}
                   <div class="post-preview">
                       <h2 class="post-title">
-                          {{ grocery.user }}
+                          <a href="{% url 'grocery:update' grocery.pk %}">
+                              {{ grocery.user }}
+                          </a>
                       </h2>
 
                       {% if grocery.checkbox_1 == 'checked' %}

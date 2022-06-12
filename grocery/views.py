@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .models import Grocery
-from .forms import GroceryCreateForm
+from .forms import GroceryCreateForm, GroceryUpdateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 
@@ -27,6 +27,7 @@ def index(request):
     return render(request, 'grocery/grocery_list.html', context)
 """
 
+# クラスベースビュー(checked,uncheckedの入力で買った物記録を新規登録できる)
 class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
     model = Grocery
     template_name = 'grocery/grocery_create.html'
@@ -43,3 +44,35 @@ class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
     def form_invalid(self, form):
         messages.error(self.request, '買った物の記録に失敗しました。')
         return super().form_invalid(form)
+
+
+def update(request, pk):
+    req = request.POST.copy()
+    #grocery = get_object_or_404(Grocery, pk=pk)
+    obj = Grocery.objects.get(pk=pk)
+    initial_values = {"user": obj.user}
+
+    checkbox_1 = request.POST.getlist('checkbox_1')
+    checkbox_2 = request.POST.getlist('checkbox_2')
+    checkbox_3 = request.POST.getlist('checkbox_3')
+    form = GroceryUpdateForm(request.POST or initial_values)
+    ctx = {"form": form}
+    if request.method == 'POST':
+        if checkbox_1:
+            obj.checkbox_1 = 'checked'
+        else:
+            obj.checkbox_1 = 'unchecked'
+
+        if checkbox_2:
+            obj.checkbox_2 = 'checked'
+        else:
+            obj.checkbox_2 = 'unchecked'
+
+        if checkbox_3:
+            obj.checkbox_3 = 'checked'
+        else:
+            obj.checkbox_3 = 'unchecked'
+        obj.save()
+        return redirect('grocery:grocery_list')
+
+    return render(request, 'grocery/grocery_update.html', ctx)
