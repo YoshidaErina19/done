@@ -6,6 +6,7 @@ from .forms import GroceryCreateForm, GroceryUpdateForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 
+
 # Create your views here.
 
 
@@ -27,6 +28,7 @@ def index(request):
     return render(request, 'grocery/grocery_list.html', context)
 """
 
+
 # クラスベースビュー(checked,uncheckedの入力で買った物記録を新規登録できる)
 class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
     model = Grocery
@@ -47,16 +49,27 @@ class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 def update(request, pk):
-    req = request.POST.copy()
-    #grocery = get_object_or_404(Grocery, pk=pk)
+    # grocery = get_object_or_404(Grocery, pk=pk)
     obj = Grocery.objects.get(pk=pk)
-    initial_values = {"user": obj.user}
+    initial_values = {"user": obj.user,
+                      # "checkbox_created_at": obj.checkbox_created_at,
+                      "checkbox_1": obj.checkbox_1,
+                      }
 
     checkbox_1 = request.POST.getlist('checkbox_1')
     checkbox_2 = request.POST.getlist('checkbox_2')
     checkbox_3 = request.POST.getlist('checkbox_3')
     form = GroceryUpdateForm(request.POST or initial_values)
     ctx = {"form": form}
+
+    if request.method == 'GET':
+        ctx = {"checkbox_1": obj.checkbox_1,
+               "checkbox_2": obj.checkbox_2,
+               "checkbox_3": obj.checkbox_3,
+               "checkbox_created_at": obj.checkbox_created_at
+               }
+        return render(request, 'grocery/grocery_update.html', ctx)
+
     if request.method == 'POST':
         if checkbox_1:
             obj.checkbox_1 = 'checked'
