@@ -49,12 +49,8 @@ class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 def update(request, pk):
-    # grocery = get_object_or_404(Grocery, pk=pk)
     obj = Grocery.objects.get(pk=pk)
-    initial_values = {"user": obj.user,
-                      # "checkbox_created_at": obj.checkbox_created_at,
-                      "checkbox_1": obj.checkbox_1,
-                      }
+    initial_values = {"user": obj.user}
 
     checkbox_1 = request.POST.getlist('checkbox_1')
     checkbox_2 = request.POST.getlist('checkbox_2')
@@ -86,6 +82,7 @@ def update(request, pk):
         else:
             obj.checkbox_3 = 'unchecked'
         obj.save()
+        messages.success(request, '買った物を登録しました。お疲れ様でした！')
         return redirect('grocery:grocery_list')
 
     return render(request, 'grocery/grocery_update.html', ctx)
