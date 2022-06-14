@@ -25,6 +25,7 @@
                     <br>
                     <button class="btn btn-primary" type="submit">更新</button>
                     <a class="btn btn-danger mt-3 ml-2 mb-3" href="{% url 'grocery:grocery_delete' pk %}">削除</a>
+                    <a class="btn btn-secondary mt-3 ml-2 mb-3" href="{% url 'grocery:grocery_list' %}">キャンセル</a>
                     {% csrf_token %}
                 </form>
             </div>
