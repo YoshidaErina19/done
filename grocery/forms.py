@@ -5,7 +5,7 @@ from .models import Grocery
 class GroceryCreateForm(forms.ModelForm):
     class Meta:
         model = Grocery
-        fields = ('checkbox_1', 'checkbox_2', 'checkbox_3',)
+        fields = ('user','checkbox_1', 'checkbox_2', 'checkbox_3',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

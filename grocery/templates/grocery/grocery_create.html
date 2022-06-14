@@ -9,20 +9,21 @@
 <div class="container">
     <div class="row">
         <div class="my-div-style w-100">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table class="table">
-                    {{ form.as_table }}
-                </table>
-                <div>
-                    <input type="checkbox" name="tags" value="1" id="id_tags_0" class="invisible">
-                    <label for="id_tags_0" class="round">牛乳</label>
-
-                    <input type="checkbox" name="tags" value="1" id="id_tags_1" class="invisible">
-                    <label for="id_tags_1" class="round">食パン</label>
-                </div>
-                <button class="btn btn-primary" type="submit">登録</button>
-            </form>
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="checkbox" name="checkbox_1" id="id_tags_1" class="invisible" {{ checkbox_1 }}>
+                    <label for="id_tags_1" class="round">牛乳</label>
+                    <input type="checkbox" name="checkbox_2" id="id_tags_2" class="invisible" value = "{{ checkbox.id }}" {{ checkbox_2 }}>
+                    <label for="id_tags_2" class="round">食パン</label>
+                    <input type="checkbox" name="checkbox_3" id="id_tags_3" class="invisible" value = "{{ checkbox.id }}" {{ checkbox_3 }}>
+                    <label for="id_tags_3" class="round">ヨーグルト</label>
+                    <br>
+                    <br>
+                    <button class="btn btn-primary" type="submit">作成</button>
+                    <a class="btn btn-secondary mt-3 ml-2 mb-3" href="{% url 'grocery:grocery_list' %}">キャンセル</a>
+                </form>
+            </div>
         </div>
     </div>
 </div>
