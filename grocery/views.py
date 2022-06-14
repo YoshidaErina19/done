@@ -62,7 +62,8 @@ def update(request, pk):
         ctx = {"checkbox_1": obj.checkbox_1,
                "checkbox_2": obj.checkbox_2,
                "checkbox_3": obj.checkbox_3,
-               "checkbox_created_at": obj.checkbox_created_at
+               "checkbox_created_at": obj.checkbox_created_at,
+               "pk": obj.pk,
                }
         return render(request, 'grocery/grocery_update.html', ctx)
 
@@ -86,3 +87,12 @@ def update(request, pk):
         return redirect('grocery:grocery_list')
 
     return render(request, 'grocery/grocery_update.html', ctx)
+
+class GroceryDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Grocery
+    template_name = 'grocery/grocery_delete.html'
+    success_url = reverse_lazy('grocery:grocery_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "買った物記録を削除しました。")
+        return super().delete(request, *args, **kwargs)
