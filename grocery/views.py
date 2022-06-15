@@ -28,7 +28,7 @@ def index(request):
     return render(request, 'grocery/grocery_list.html', context)
 """
 
-
+"""
 # クラスベースビュー(checked,uncheckedの入力で買った物記録を新規登録できる)
 class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
     model = Grocery
@@ -46,7 +46,7 @@ class GroceryCreateView(LoginRequiredMixin, generic.CreateView):
     def form_invalid(self, form):
         messages.error(self.request, '買った物の記録に失敗しました。')
         return super().form_invalid(form)
-
+"""
 
 # 関数ベースビュー(チェックしたものが買った物記録として新規作成される)
 def grocery_create(request):
@@ -59,24 +59,17 @@ def grocery_create(request):
     ctx = {"form": form}
 
     if request.method == 'GET':
-        print(ctx)
         return render(request, 'grocery/grocery_create.html', ctx)
 
     if request.method == 'POST':
         if checkbox_1:
             checkbox_1 = 'checked'
-        else:
-            checkbox_1 = 'unchecked'
 
         if checkbox_2:
             checkbox_2 = 'checked'
-        else:
-            checkbox_2 = 'unchecked'
 
         if checkbox_3:
             checkbox_3 = 'checked'
-        else:
-            checkbox_3 = 'unchecked'
 
         object = Grocery.objects.create(
             user = request.user,
