@@ -74,6 +74,7 @@ def grocery_create(request):
 
         object = Grocery.objects.create(
             user = request.user,
+            worker = request.POST.get('worker'),
             checkbox_1 = checkbox_1,
             checkbox_2 = checkbox_2,
             checkbox_3 = checkbox_3,
@@ -90,6 +91,7 @@ def update(request, pk):
     obj = Grocery.objects.get(pk=pk)
     initial_values = {"user": obj.user}
 
+    worker = request.POST.get('worker')
     checkbox_1 = request.POST.getlist('checkbox_1')
     checkbox_2 = request.POST.getlist('checkbox_2')
     checkbox_3 = request.POST.getlist('checkbox_3')
@@ -97,7 +99,8 @@ def update(request, pk):
     ctx = {"form": form}
 
     if request.method == 'GET':
-        ctx = {"checkbox_1": obj.checkbox_1,
+        ctx = {"worker": obj.worker,
+               "checkbox_1": obj.checkbox_1,
                "checkbox_2": obj.checkbox_2,
                "checkbox_3": obj.checkbox_3,
                "checkbox_created_at": obj.checkbox_created_at,
@@ -120,6 +123,8 @@ def update(request, pk):
             obj.checkbox_3 = 'checked'
         else:
             obj.checkbox_3 = 'unchecked'
+        if worker:
+            obj.worker = request.POST.get('worker')
         obj.save()
         messages.success(request, '買った物を登録しました。お疲れ様でした！')
         return redirect('grocery:grocery_list')

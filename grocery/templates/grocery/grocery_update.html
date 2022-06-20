@@ -14,7 +14,8 @@
         <div class="my-div-style w-100">
             <div class="col-lg-8 col-md-10 mx-auto">
                 <form action="" method="POST">
-                    <p>{{ user }}が{{ checkbox_created_at }}に作成</p>
+                    <p>{{ worker }}が{{ checkbox_created_at }}に作成</p>
+                    <P>買い物した人:  <input name="worker"placeholder="お疲れさま！" {{ worker }}></P>
                     <input type="checkbox" name="checkbox_1" id="id_tags_1" class="invisible" value = "{{ checkbox.id }}" {{ checkbox_1 }}>
                     <label for="id_tags_1" class="round">牛乳</label>
                     <input type="checkbox" name="checkbox_2" id="id_tags_2" class="invisible" value = "{{ checkbox.id }}" {{ checkbox_2 }}>
