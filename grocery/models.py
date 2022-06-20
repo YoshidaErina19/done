@@ -6,6 +6,7 @@ from django.utils import timezone
 
 class Grocery(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
+    worker = models.CharField(max_length=20, verbose_name='買い物した人', default='頑張った人')
     checkbox_1 = models.CharField(max_length=10, default='unchecked')
     checkbox_2 = models.CharField(max_length=10, default='unchecked')
     checkbox_3 = models.CharField(max_length=10, default='unchecked')
