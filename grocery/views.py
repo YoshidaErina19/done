@@ -13,6 +13,7 @@ from django.contrib import messages
 class GroceryListView(LoginRequiredMixin, generic.ListView):
     model = Grocery
     template_name = 'grocery_list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         groceries = Grocery.objects.filter(user=self.request.user).order_by('-checkbox_created_at')
