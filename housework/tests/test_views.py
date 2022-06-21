@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse_lazy
 
-from .models import Housework
+from ..models import Housework
 
 
 class LoggedInTestCase(TestCase):
@@ -39,13 +39,13 @@ class TestHouseworkCreateView(LoggedInTestCase):
                   }
 
         # 新規家事記録作成処理(Post)を実行
-        response = self.client.post(reverse_lazy('housework: housework_create'), params)
+        response = self.client.post(reverse_lazy('housework:housework_create'), params)
 
         # 家事リストページのリダイレクトを検証
-        self.assertRedirects(response, reverse_lazy('housework: housework_list'))
+        self.assertRedirects(response, reverse_lazy('housework:housework_list'))
 
         # 家事記録データがDBに登録されたかを検証
-        self.assertEqual(Housework.object.filter(title='テストタイトル').count(), 1)
+        self.assertEqual(Housework.objects.filter(title='テストタイトル').count(), 1)
 
     def test_create_housework_failure(self):
         """新規家事記録作成が失敗することを検証する"""
@@ -59,7 +59,7 @@ class TestHouseworkCreateView(LoggedInTestCase):
 class TestHouseworkUpdateView(LoggedInTestCase):
     """HouseworkUpdateView用のテストクラス"""
 
-    def test_update_housework_successs(self):
+    def test_update_housework_success(self):
         """家事記録編集処理が成功することを確認する"""
         # テスト用データの作成
         housework = Housework.objects.create(user=self.test_user, title='タイトル編集前')
@@ -70,7 +70,7 @@ class TestHouseworkUpdateView(LoggedInTestCase):
         response = self.client.post(reverse_lazy('housework:housework_update',kwargs={'pk': housework.pk}), params)
 
         # 家事詳細ページへのリダイレクトを検証
-        self.assertRedirects(response, reverse_lazy('housework: housework_detail', kwargs={'pk: housework.pk'}))
+        self.assertRedirects(response, reverse_lazy('housework:housework_detail', kwargs={'pk': housework.pk}))
 
         # 家事記録データが編集されたかを検証
         self.assertEqual(Housework.objects.get(pk=housework.pk).title, 'タイトル編集後')
@@ -89,13 +89,13 @@ class TestHouseworkDeleteView(LoggedInTestCase):
     """HouseworkDeleteView用のテストクラス"""
 
     def test_delete_housework_success(self):
-    """家事記録削除処理が成功することを検証する"""
+        """家事記録削除処理が成功することを検証する"""
 
         # テスト用家事記録データの作成
-        housework = Housework.obgects.create(user=self.test_user, title='タイトル')
+        housework = Housework.objects.create(user=self.test_user, title='タイトル')
 
         # 家事記録削除処理(Post)を実行
-        response = self.client.post(reverse_lazy('housework: housework_delete', kwargs={'pk': housework.pk}))
+        response = self.client.post(reverse_lazy('housework:housework_delete', kwargs={'pk': housework.pk}))
 
         # 家事記録リストページへのリダイレクトを検証
         self.assertRedirects(response, reverse_lazy('housework:housework_list'))
@@ -107,7 +107,7 @@ class TestHouseworkDeleteView(LoggedInTestCase):
         """家事記録削除処理が失敗することを検証する"""
 
         # 家事記録削除処理(Post)を実行
-        response = self.client.post(reverse_lazy('housework: housework_delete', kwargs={'pk': 999}))
+        response = self.client.post(reverse_lazy('housework:housework_delete', kwargs={'pk': 999}))
 
         # 存在しない家事記録データを削除しようとしてエラーになることを検証
         self.assertEqual(response.status_code, 404)
