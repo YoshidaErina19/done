@@ -28,9 +28,11 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'grocery.apps.GroceryConfig',
 
-    #'django.contrib.sites',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
+
+    'django_ses',
 ]
 
 MIDDLEWARE = [
