@@ -11,7 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from .local_settings import *
+"""本番環境では環境変数にセキュリティキーを設定するためコメントアウト"""
+# from .local_settings import *
 
 # Application definition
 
