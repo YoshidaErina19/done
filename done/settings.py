@@ -32,12 +32,12 @@ LOGGING = {
         # houseworkアプリケーションが利用するロガー
         'housework': {
             'handlers': ['file'],
-            'level': [INFO],
+            'level': 'INFO',
         },
         # groceryアプリケーションが利用するロガー
         'grocery': {
             'handlers': ['file'],
-            'level': [INFO],
+            'level': 'INFO',
         },
     },
 
