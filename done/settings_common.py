@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'housework.apps.HouseworkConfig',
-    'django_bootstrap5',
+    # 'django_bootstrap5',
     'accounts.apps.AccountsConfig',
     'grocery.apps.GroceryConfig',
 
